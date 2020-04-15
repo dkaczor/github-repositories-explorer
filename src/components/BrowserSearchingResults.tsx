@@ -1,73 +1,71 @@
-import React, { FC, useState, Fragment } from "react";
-import { Segment, Icon } from "semantic-ui-react";
-import styled from "@emotion/styled";
+import React, { FC, useState, Fragment, useMemo } from "react";
+import { Icon } from "semantic-ui-react";
 import { RepositoryPanels } from "components/RepositoryPanel";
+import { ExpandedSegment, ExpandedParagraph } from "styled";
 
 interface BrowserSearchingResultsProps {
   searchingResults: any[] | undefined;
   userRepositories: any[] | undefined;
   searchedUserName: string;
+  isLoadingRepositories: boolean;
+  isLoadedUsers: boolean;
   onPanelClick: (userName: string) => void;
 }
-
-const ExpandedSegment = styled(Segment)`
-  &&& {
-    background-color: rgb(242, 242, 242);
-    border-radius: 0;
-    margin-top: 25px;
-    font-weight: 500;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-    transition: 3s;
-  }
-
-  &&&:hover {
-    background-color: rgb(242, 242, 222);
-  }
-`;
-
-const ExpandedParagraph = styled.p`
-  text-align: start;
-`;
 
 export const BrowserSearchingResults: FC<BrowserSearchingResultsProps> = ({
   searchedUserName,
   searchingResults,
   onPanelClick,
   userRepositories,
+  isLoadedUsers,
+  isLoadingRepositories,
 }) => {
   const [panelState, updatePanelState] = useState<number>(0);
-  const gitHubUserPanels = searchingResults?.map((item) => (
-    <Fragment key={item.id}>
-      <ExpandedSegment
-        onClick={() => {
-          if (panelState !== item.id) {
-            updatePanelState(item.id);
-            onPanelClick(item.login);
-          } else {
-            updatePanelState(0);
-          }
-        }}
-      >
-        <span>{item.login}</span>
-        {panelState !== item.id && <Icon name="chevron down" />}
-        {panelState === item.id && <Icon name="chevron up" />}
-      </ExpandedSegment>
-      {panelState === item.id && !!userRepositories?.length && (
-        <RepositoryPanels userRepositories={userRepositories} />
-      )}
-    </Fragment>
-  ));
+
+  const gitHubUserPanels = useMemo(
+    () =>
+      searchingResults?.map((item) => (
+        <Fragment key={item.id}>
+          <ExpandedSegment
+            disabled={isLoadingRepositories}
+            onClick={() => {
+              if (panelState !== item.id) {
+                updatePanelState(item.id);
+                onPanelClick(item.login);
+              } else {
+                updatePanelState(0);
+              }
+            }}
+          >
+            <span>{item.login}</span>
+            {panelState !== item.id && <Icon name="chevron down" />}
+            {panelState === item.id && <Icon name="chevron up" />}
+          </ExpandedSegment>
+          {panelState === item.id && !!userRepositories?.length && (
+            <RepositoryPanels userRepositories={userRepositories} />
+          )}
+        </Fragment>
+      )),
+    [
+      searchingResults,
+      isLoadingRepositories,
+      panelState,
+      onPanelClick,
+      userRepositories,
+    ]
+  );
   return (
     <>
-      {!!searchingResults?.length && !panelState && (
-        <ExpandedParagraph>
-          Showing users for : {searchedUserName}{" "}
-        </ExpandedParagraph>
-      )}
+      <ExpandedParagraph>
+        {!!searchingResults?.length && !panelState && (
+          <>
+            Showing users for: <span>{searchedUserName}</span>
+          </>
+        )}
+        {!searchingResults?.length && isLoadedUsers && (
+          <>There is no results of searching.</>
+        )}
+      </ExpandedParagraph>
       {gitHubUserPanels}
     </>
   );

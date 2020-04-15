@@ -1,44 +1,38 @@
 import React, { useEffect, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Container,
-  Grid,
-  Button,
-  Segment,
-  Input,
-  Loader,
-} from "semantic-ui-react";
-import styled from "@emotion/styled";
-import {
-  setSearchingInput,
-  destroy,
-} from "store/Repositories/Repositories.reducer";
-import {
-  fetchGitHubUsers,
-  fetchGitHubUserRepositories,
-} from "store/Repositories/Repositories.thunks";
+import { Container, Grid, Segment, Input } from "semantic-ui-react";
+import { setSearchingInput, destroyUserSlice } from "store/Users/Users.reducer";
+import { fetchGitHubUsers } from "store/Users/Users.thunks";
+import { fetchGitHubUserRepositories } from "store/Repositories/Repositories.thunks";
 import {
   getGitHubUsers,
   getUserSearchingText,
-  getLoadingState,
+  getLoadingStatusState,
   getSearchedUserName,
+} from "store/Users/Users.selector";
+import {
   getGitHubRepositories,
+  getLoadingRepositoriesState,
 } from "store/Repositories/Repositories.selector";
 import { BrowserSearchingResults } from "components/BrowserSearchingResults";
+import { ExpandedButton, AppLoader } from "./styled";
+import { destroyRepositoriesSlice } from "store/Repositories/Repositories.reducer";
 
 const GitHubRepositoriesExplorer: FC = () => {
   const [
     fetchedGitHubUsers,
     typedSearchingText,
-    isLoading,
+    loadingUsersStatus,
     searchedUserName,
     userRepositories,
+    isLoadingRepositories,
   ] = [
     useSelector(getGitHubUsers),
     useSelector(getUserSearchingText),
-    useSelector(getLoadingState),
+    useSelector(getLoadingStatusState),
     useSelector(getSearchedUserName),
     useSelector(getGitHubRepositories),
+    useSelector(getLoadingRepositoriesState),
   ];
 
   const dispatch = useDispatch();
@@ -57,20 +51,10 @@ const GitHubRepositoriesExplorer: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(destroy());
+      dispatch(destroyUserSlice());
+      dispatch(destroyRepositoriesSlice());
     };
   }, [dispatch]);
-
-  const ExpandedButton = styled(Button)`
-    &&& {
-      background-color: rgb(44, 156, 219);
-      border-radius: 0;
-      color: #fff;
-      margin-top: 25px;
-      font-weight: 300;
-      padding: 15px 0px;
-    }
-  `;
 
   return (
     <Container>
@@ -85,23 +69,28 @@ const GitHubRepositoriesExplorer: FC = () => {
                   setSearchingInputText(e.target.value)
                 }
                 className="inputClass"
+                placeholder="Enter username"
               />
               <ExpandedButton
                 fluid
                 onClick={() => {
                   fetchUsers();
                 }}
-                disabled={!typedSearchingText.length || isLoading}
+                disabled={
+                  !typedSearchingText.length || loadingUsersStatus.loading
+                }
               >
                 Search
               </ExpandedButton>
-              {isLoading ? (
-                <Loader active inline="centered" />
+              {loadingUsersStatus.loading ? (
+                <AppLoader active inline="centered" />
               ) : (
                 <BrowserSearchingResults
                   searchedUserName={searchedUserName}
                   searchingResults={fetchedGitHubUsers}
                   userRepositories={userRepositories}
+                  isLoadingRepositories={isLoadingRepositories}
+                  isLoadedUsers={loadingUsersStatus.loaded}
                   onPanelClick={fetchUsersFromRepository}
                 />
               )}

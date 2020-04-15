@@ -43,3 +43,6 @@
 [0415/163536.601:ERROR:crash_report_database_win.cc(580)] CreateDirectory C:\Program Files (x86)\Hothair\Reports\Dump: The system cannot find the path specified. (0x3)
 [0415/163536.605:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
 [0415/163536.606:ERROR:crash_report_database_win.cc(580)] CreateDirectory C:\Program Files (x86)\Hothair\Reports\Dump: The system cannot find the path specified. (0x3)
+[0415/165730.245:ERROR:crash_report_database_win.cc(580)] CreateDirectory C:\Program Files (x86)\Hothair\Reports\Dump: The system cannot find the path specified. (0x3)
+[0415/165730.249:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0415/165730.250:ERROR:crash_report_database_win.cc(580)] CreateDirectory C:\Program Files (x86)\Hothair\Reports\Dump: The system cannot find the path specified. (0x3)
