@@ -1,7 +1,8 @@
 import React, { useEffect, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Grid, Segment, Input } from "semantic-ui-react";
+import { Container, Grid, Segment } from "semantic-ui-react";
 import { setSearchingInput, destroyUserSlice } from "store/Users/Users.reducer";
+import { destroyRepositoriesSlice } from "store/Repositories/Repositories.reducer";
 import { fetchGitHubUsers } from "store/Users/Users.thunks";
 import { fetchGitHubUserRepositories } from "store/Repositories/Repositories.thunks";
 import {
@@ -14,9 +15,9 @@ import {
   getGitHubRepositories,
   getLoadingRepositoriesState,
 } from "store/Repositories/Repositories.selector";
+import { AppLoader } from "./styled";
 import { BrowserSearchingResults } from "components/BrowserSearchingResults";
-import { ExpandedButton, AppLoader } from "./styled";
-import { destroyRepositoriesSlice } from "store/Repositories/Repositories.reducer";
+import { ExplorerHeader } from "components/ExplorerHeader";
 
 const GitHubRepositoriesExplorer: FC = () => {
   const [
@@ -63,25 +64,12 @@ const GitHubRepositoriesExplorer: FC = () => {
           <Grid.Column />
           <Grid.Column textAlign="center">
             <Segment>
-              <Input
-                fluid
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setSearchingInputText(e.target.value)
-                }
-                className="inputClass"
-                placeholder="Enter username"
+              <ExplorerHeader
+                isLoadingUsers={loadingUsersStatus.loading}
+                typedSearchingText={typedSearchingText}
+                onSearchButtonClick={fetchUsers}
+                onTextInput={setSearchingInputText}
               />
-              <ExpandedButton
-                fluid
-                onClick={() => {
-                  fetchUsers();
-                }}
-                disabled={
-                  !typedSearchingText.length || loadingUsersStatus.loading
-                }
-              >
-                Search
-              </ExpandedButton>
               {loadingUsersStatus.loading ? (
                 <AppLoader active inline="centered" />
               ) : (
