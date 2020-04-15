@@ -1,14 +1,15 @@
 import React, { FC, useState, Fragment, useMemo } from "react";
-import { Icon } from "semantic-ui-react";
 import { RepositoryPanels } from "components/RepositoryPanel";
-import { ExpandedSegment, ExpandedParagraph } from "styled";
+import { ExpandedParagraph } from "styled";
+import { StateTypes } from "store/Shared/Shared.types";
+import { BrowserSearchingPanel } from "./BrowserSearchingPanel";
 
 interface BrowserSearchingResultsProps {
   searchingResults: any[] | undefined;
   userRepositories: any[] | undefined;
   searchedUserName: string;
-  isLoadingRepositories: boolean;
-  isLoadedUsers: boolean;
+  repositoriesStatus: StateTypes;
+  usersStatus: StateTypes;
   onPanelClick: (userName: string) => void;
 }
 
@@ -17,39 +18,32 @@ export const BrowserSearchingResults: FC<BrowserSearchingResultsProps> = ({
   searchingResults,
   onPanelClick,
   userRepositories,
-  isLoadedUsers,
-  isLoadingRepositories,
+  usersStatus,
+  repositoriesStatus,
 }) => {
   const [panelState, updatePanelState] = useState<number>(0);
-
   const gitHubUserPanels = useMemo(
     () =>
       searchingResults?.map((item) => (
         <Fragment key={item.id}>
-          <ExpandedSegment
-            disabled={isLoadingRepositories}
-            onClick={() => {
-              if (panelState !== item.id) {
-                updatePanelState(item.id);
-                onPanelClick(item.login);
-              } else {
-                updatePanelState(0);
-              }
-            }}
-          >
-            <span>{item.login}</span>
-            <Icon
-              name={panelState !== item.id ? "chevron down" : "chevron up"}
-            />
-          </ExpandedSegment>
-          {panelState === item.id && !!userRepositories?.length && (
+          <BrowserSearchingPanel
+            panelState={panelState}
+            panelLogin={item.login}
+            panelId={item.id}
+            repositoriesStatus={repositoriesStatus}
+            onUpdatePanelState={updatePanelState}
+            onPanelClick={onPanelClick}
+          />
+          {panelState === item.id && userRepositories?.length ? (
             <RepositoryPanels userRepositories={userRepositories} />
+          ) : (
+            ""
           )}
         </Fragment>
       )),
     [
       searchingResults,
-      isLoadingRepositories,
+      repositoriesStatus,
       panelState,
       onPanelClick,
       userRepositories,
@@ -58,12 +52,14 @@ export const BrowserSearchingResults: FC<BrowserSearchingResultsProps> = ({
   return (
     <>
       <ExpandedParagraph>
-        {!!searchingResults?.length && !panelState && (
+        {searchingResults?.length && !panelState ? (
           <>
             Showing users for: <span>{searchedUserName}</span>
           </>
+        ) : (
+          ""
         )}
-        {!searchingResults?.length && isLoadedUsers && (
+        {!searchingResults?.length && usersStatus === "loaded" && (
           <>There is no results of searching.</>
         )}
       </ExpandedParagraph>

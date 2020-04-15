@@ -10,8 +10,7 @@ export interface GithubRepositoriesState extends LoadingInterface {
 export const githubRepositoriesSlice = createSlice({
   name: ReducerName,
   initialState: {
-    loading: false,
-    loaded: false,
+    status: "initial",
     githubRepositories: [],
     error: undefined,
   } as GithubRepositoriesState,
@@ -22,19 +21,18 @@ export const githubRepositoriesSlice = createSlice({
 
   extraReducers: {
     [`${fetchGitHubUserRepositories.pending}`]: (state) => {
-      state.loading = true;
-      state.loaded = false;
+      state.status = "loading";
       state.githubRepositories = [];
     },
     [`${fetchGitHubUserRepositories.fulfilled}`]: (state, action) => {
-      state.loaded = true;
-      state.loading = false;
+      state.status = "loaded";
       state.githubRepositories = action.payload.length
         ? action.payload
         : [{ name: "There is no repositories assigned to this user", id: 0 }];
     },
     [`${fetchGitHubUserRepositories.rejected}`]: (state, action) => {
       state.error = action.payload;
+      state.status = "rejected";
     },
   },
 });

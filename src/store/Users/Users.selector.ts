@@ -1,18 +1,13 @@
 import { createSelector, Selector } from "reselect";
 import { RootType } from "store/root";
-import { LoadingInterface } from "store/Shared/Shared.types";
-
-type LoadingOptions = Omit<LoadingInterface, "error">;
+import { StateTypes } from "store/Shared/Shared.types";
 
 const rootSelector = (rootReducer: RootType) => rootReducer;
 
-export const getLoadingStatusState: Selector<
+export const getStatusUserState: Selector<
   RootType,
-  LoadingOptions
-> = createSelector(rootSelector, (api) => ({
-  loaded: api.gitHubUsersReducer.loaded,
-  loading: api.gitHubUsersReducer.loading,
-}));
+  StateTypes
+> = createSelector(rootSelector, (api) => api.gitHubUsersReducer.status);
 
 export const getUserSearchingText: Selector<RootType, string> = createSelector(
   rootSelector,

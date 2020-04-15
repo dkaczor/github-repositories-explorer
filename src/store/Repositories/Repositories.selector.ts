@@ -1,5 +1,6 @@
 import { createSelector, Selector } from "reselect";
 import { RootType } from "store/root";
+import { StateTypes } from "store/Shared/Shared.types";
 
 const rootSelector = (rootReducer: RootType) => rootReducer;
 
@@ -11,10 +12,7 @@ export const getGitHubRepositories: Selector<
   (root) => root.gitHubRepositoriesReducer.githubRepositories
 );
 
-export const getLoadingRepositoriesState: Selector<
+export const getRepositoriesStateStatus: Selector<
   RootType,
-  boolean
-> = createSelector(
-  rootSelector,
-  (api) => api.gitHubRepositoriesReducer.loading
-);
+  StateTypes
+> = createSelector(rootSelector, (api) => api.gitHubRepositoriesReducer.status);

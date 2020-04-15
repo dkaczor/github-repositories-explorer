@@ -12,8 +12,7 @@ export interface GithubUsersState extends LoadingInterface {
 export const gitHubUsersSlice = createSlice({
   name: ReducerName,
   initialState: {
-    loading: false,
-    loaded: false,
+    status: "initial",
     userSearchingText: "",
     searchedUserName: "",
     githubUsers: [],
@@ -33,16 +32,15 @@ export const gitHubUsersSlice = createSlice({
 
   extraReducers: {
     [`${fetchGitHubUsers.pending}`]: (state) => {
-      state.loading = true;
-      state.loaded = false;
+      state.status = "loading";
     },
     [`${fetchGitHubUsers.fulfilled}`]: (state, action) => {
-      state.loaded = true;
-      state.loading = false;
+      state.status = "loaded";
       state.githubUsers = action.payload.items;
       state.searchedUserName = action.meta.arg;
     },
     [`${fetchGitHubUsers.rejected}`]: (state, action) => {
+      state.status = "rejected";
       state.error = action.payload;
     },
   },

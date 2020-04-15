@@ -8,12 +8,12 @@ import { fetchGitHubUserRepositories } from "store/Repositories/Repositories.thu
 import {
   getGitHubUsers,
   getUserSearchingText,
-  getLoadingStatusState,
+  getStatusUserState,
   getSearchedUserName,
 } from "store/Users/Users.selector";
 import {
   getGitHubRepositories,
-  getLoadingRepositoriesState,
+  getRepositoriesStateStatus,
 } from "store/Repositories/Repositories.selector";
 import { AppLoader } from "./styled";
 import { BrowserSearchingResults } from "components/BrowserSearchingResults";
@@ -23,23 +23,23 @@ const GitHubRepositoriesExplorer: FC = () => {
   const [
     fetchedGitHubUsers,
     typedSearchingText,
-    loadingUsersStatus,
+    userStatusState,
     searchedUserName,
     userRepositories,
-    isLoadingRepositories,
+    repositoriesStatusState,
   ] = [
     useSelector(getGitHubUsers),
     useSelector(getUserSearchingText),
-    useSelector(getLoadingStatusState),
+    useSelector(getStatusUserState),
     useSelector(getSearchedUserName),
     useSelector(getGitHubRepositories),
-    useSelector(getLoadingRepositoriesState),
+    useSelector(getRepositoriesStateStatus),
   ];
 
   const dispatch = useDispatch();
 
-  const setSearchingInputText = (text: string) => {
-    dispatch(setSearchingInput(text));
+  const setSearchingInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchingInput(e.target.value));
   };
 
   const fetchUsers = () => {
@@ -65,20 +65,20 @@ const GitHubRepositoriesExplorer: FC = () => {
           <Grid.Column textAlign="center">
             <Segment>
               <ExplorerHeader
-                isLoadingUsers={loadingUsersStatus.loading}
+                userStatusState={userStatusState}
                 typedSearchingText={typedSearchingText}
                 onSearchButtonClick={fetchUsers}
                 onTextInput={setSearchingInputText}
               />
-              {loadingUsersStatus.loading ? (
+              {userStatusState === "loading" ? (
                 <AppLoader active inline="centered" />
               ) : (
                 <BrowserSearchingResults
                   searchedUserName={searchedUserName}
                   searchingResults={fetchedGitHubUsers}
                   userRepositories={userRepositories}
-                  isLoadingRepositories={isLoadingRepositories}
-                  isLoadedUsers={loadingUsersStatus.loaded}
+                  repositoriesStatus={repositoriesStatusState}
+                  usersStatus={userStatusState}
                   onPanelClick={fetchUsersFromRepository}
                 />
               )}
