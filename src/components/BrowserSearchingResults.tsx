@@ -38,8 +38,9 @@ export const BrowserSearchingResults: FC<BrowserSearchingResultsProps> = ({
             }}
           >
             <span>{item.login}</span>
-            {panelState !== item.id && <Icon name="chevron down" />}
-            {panelState === item.id && <Icon name="chevron up" />}
+            <Icon
+              name={panelState !== item.id ? "chevron down" : "chevron up"}
+            />
           </ExpandedSegment>
           {panelState === item.id && !!userRepositories?.length && (
             <RepositoryPanels userRepositories={userRepositories} />
