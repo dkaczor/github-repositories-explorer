@@ -1,9 +1,14 @@
 import React, { FC, useMemo } from "react";
 import { Icon } from "semantic-ui-react";
-import { ExpandedPanelSegment, PanelFirstRow, PanelsWrapper } from "styled";
+import {
+  ExpandedPanelSegment,
+  PanelFirstRow,
+  PanelsWrapper,
+} from "components/styled";
+import { Repository } from "store/Repositories/Repositories.types";
 
 interface RepositoryPanelsProps {
-  userRepositories: any[] | undefined;
+  userRepositories: Repository[] | undefined;
 }
 
 export const RepositoryPanels: FC<RepositoryPanelsProps> = ({

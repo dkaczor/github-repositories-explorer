@@ -22,6 +22,7 @@ export const ExpandedSegment = styled(Segment)`
   &&& {
     background-color: rgb(242, 242, 242);
     border-radius: 0;
+    border: none;
     margin-top: 25px;
     font-weight: 600;
     padding-top: 7px;
@@ -67,6 +68,7 @@ export const ExpandedPanelSegment = styled(Segment)`
   p {
     margin-left: -5px;
     font-size: 15px;
+    text-align: justify;
   }
 `;
 

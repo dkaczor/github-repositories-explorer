@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchGitHubUserRepositories } from "./Repositories.thunks";
 import { ReducerName } from "./Repositories.constants";
 import { LoadingInterface } from "store/Shared/Shared.types";
+import { Repository } from "./Repositories.types";
 
 export interface GithubRepositoriesState extends LoadingInterface {
-  githubRepositories: any[] | undefined;
+  githubRepositories: Repository[] | undefined;
 }
 
 export const githubRepositoriesSlice = createSlice({
@@ -31,7 +32,7 @@ export const githubRepositoriesSlice = createSlice({
         : [{ name: "There is no repositories assigned to this user", id: 0 }];
     },
     [`${fetchGitHubUserRepositories.rejected}`]: (state, action) => {
-      state.error = action.payload;
+      state.error = action.error.message;
       state.status = "rejected";
     },
   },

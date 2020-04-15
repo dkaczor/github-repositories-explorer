@@ -1,12 +1,11 @@
 import { createSelector, Selector } from "reselect";
-import { RootType } from "store/root";
+import { RootType, rootSelector } from "store/root";
 import { StateTypes } from "store/Shared/Shared.types";
-
-const rootSelector = (rootReducer: RootType) => rootReducer;
+import { Repository } from "./Repositories.types";
 
 export const getGitHubRepositories: Selector<
   RootType,
-  any[] | undefined
+  Repository[] | undefined
 > = createSelector(
   rootSelector,
   (root) => root.gitHubRepositoriesReducer.githubRepositories

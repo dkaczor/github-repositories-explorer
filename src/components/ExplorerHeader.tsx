@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Input } from "semantic-ui-react";
-import { ExpandedButton } from "styled";
+import { ExpandedButton } from "components/styled";
 import { StateTypes } from "store/Shared/Shared.types";
 
 interface ExplorerHeaderProps {

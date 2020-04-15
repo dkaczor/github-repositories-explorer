@@ -1,12 +1,14 @@
 import React, { FC, useState, Fragment, useMemo } from "react";
 import { RepositoryPanels } from "components/RepositoryPanel";
-import { ExpandedParagraph } from "styled";
+import { ExpandedParagraph } from "components/styled";
 import { StateTypes } from "store/Shared/Shared.types";
-import { BrowserSearchingPanel } from "./BrowserSearchingPanel";
+import { UserPanel } from "./UserPanel";
+import { Repository } from "store/Repositories/Repositories.types";
+import { User } from "store/Users/Users.types";
 
 interface BrowserSearchingResultsProps {
-  searchingResults: any[] | undefined;
-  userRepositories: any[] | undefined;
+  searchingResults: User[] | undefined;
+  userRepositories: Repository[] | undefined;
   searchedUserName: string;
   repositoriesStatus: StateTypes;
   usersStatus: StateTypes;
@@ -26,7 +28,7 @@ export const BrowserSearchingResults: FC<BrowserSearchingResultsProps> = ({
     () =>
       searchingResults?.map((item) => (
         <Fragment key={item.id}>
-          <BrowserSearchingPanel
+          <UserPanel
             panelState={panelState}
             panelLogin={item.login}
             panelId={item.id}
@@ -54,13 +56,13 @@ export const BrowserSearchingResults: FC<BrowserSearchingResultsProps> = ({
       <ExpandedParagraph>
         {searchingResults?.length && !panelState ? (
           <>
-            Showing users for: <span>{searchedUserName}</span>
+            Showing users for <span>{searchedUserName}</span>
           </>
         ) : (
           ""
         )}
         {!searchingResults?.length && usersStatus === "loaded" && (
-          <>There is no results of searching.</>
+          <>No results</>
         )}
       </ExpandedParagraph>
       {gitHubUserPanels}

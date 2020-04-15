@@ -1,8 +1,7 @@
 import { createSelector, Selector } from "reselect";
-import { RootType } from "store/root";
+import { RootType, rootSelector } from "store/root";
 import { StateTypes } from "store/Shared/Shared.types";
-
-const rootSelector = (rootReducer: RootType) => rootReducer;
+import { User } from "./Users.types";
 
 export const getStatusUserState: Selector<
   RootType,
@@ -21,7 +20,7 @@ export const getSearchedUserName: Selector<RootType, string> = createSelector(
 
 export const getGitHubUsers: Selector<
   RootType,
-  any[] | undefined
+  User[] | undefined
 > = createSelector(rootSelector, (root) =>
   root.gitHubUsersReducer.githubUsers?.slice(0, 5)
 );

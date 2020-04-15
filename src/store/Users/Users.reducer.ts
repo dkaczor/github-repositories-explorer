@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchGitHubUsers } from "./Users.thunks";
 import { ReducerName } from "./Users.constants";
 import { LoadingInterface } from "store/Shared/Shared.types";
+import { User } from "./Users.types";
 
 export interface GithubUsersState extends LoadingInterface {
-  githubUsers: any[] | undefined;
+  githubUsers: User[] | undefined;
   userSearchingText: string;
   searchedUserName: string;
 }
@@ -41,7 +42,7 @@ export const gitHubUsersSlice = createSlice({
     },
     [`${fetchGitHubUsers.rejected}`]: (state, action) => {
       state.status = "rejected";
-      state.error = action.payload;
+      state.error = action.error.message;
     },
   },
 });
