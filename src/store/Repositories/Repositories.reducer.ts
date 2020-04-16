@@ -8,16 +8,17 @@ export interface GithubRepositoriesState extends LoadingInterface {
   githubRepositories: Repository[] | undefined;
 }
 
+const initialState = {
+  status: "initial",
+  githubRepositories: [],
+  error: undefined,
+} as GithubRepositoriesState;
+
 export const githubRepositoriesSlice = createSlice({
   name: ReducerName,
-  initialState: {
-    status: "initial",
-    githubRepositories: [],
-    error: undefined,
-  } as GithubRepositoriesState,
+  initialState,
   reducers: {
-    destroyRepositoriesSlice: (initialState): GithubRepositoriesState =>
-      initialState,
+    destroyRepositoriesSlice: (): GithubRepositoriesState => initialState,
   },
 
   extraReducers: {
@@ -28,8 +29,14 @@ export const githubRepositoriesSlice = createSlice({
     [`${fetchGitHubUserRepositories.fulfilled}`]: (state, action) => {
       state.status = "loaded";
       state.githubRepositories = action.payload.length
-        ? action.payload
-        : [{ name: "There is no repositories assigned to this user", id: 0 }];
+        ? (action.payload as Repository[])
+        : [
+            {
+              name: "There is no repositories assigned to this user",
+              id: 0,
+              description: "",
+            },
+          ];
     },
     [`${fetchGitHubUserRepositories.rejected}`]: (state, action) => {
       state.error = action.error.message;

@@ -22,6 +22,7 @@ export const ExplorerHeader: FC<ExplorerHeaderProps> = ({
       onChange={onTextInput}
       className="inputClass"
       placeholder="Enter username"
+      value={typedSearchingText}
     />
     <ExpandedButton
       fluid

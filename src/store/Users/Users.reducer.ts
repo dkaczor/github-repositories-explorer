@@ -10,15 +10,17 @@ export interface GithubUsersState extends LoadingInterface {
   searchedUserName: string;
 }
 
+const initialState = {
+  status: "initial",
+  userSearchingText: "",
+  searchedUserName: "",
+  githubUsers: [],
+  error: undefined,
+} as GithubUsersState;
+
 export const gitHubUsersSlice = createSlice({
   name: ReducerName,
-  initialState: {
-    status: "initial",
-    userSearchingText: "",
-    searchedUserName: "",
-    githubUsers: [],
-    error: undefined,
-  } as GithubUsersState,
+  initialState,
   reducers: {
     setSearchingInput: (
       state,
@@ -28,7 +30,7 @@ export const gitHubUsersSlice = createSlice({
       userSearchingText: action.payload,
     }),
 
-    destroyUserSlice: (initialState): GithubUsersState => initialState,
+    destroyUserSlice: (): GithubUsersState => initialState,
   },
 
   extraReducers: {
@@ -37,7 +39,7 @@ export const gitHubUsersSlice = createSlice({
     },
     [`${fetchGitHubUsers.fulfilled}`]: (state, action) => {
       state.status = "loaded";
-      state.githubUsers = action.payload.items;
+      state.githubUsers = action.payload.items as User[];
       state.searchedUserName = action.meta.arg;
     },
     [`${fetchGitHubUsers.rejected}`]: (state, action) => {
