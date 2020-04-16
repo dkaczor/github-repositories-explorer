@@ -8,7 +8,7 @@ export const fetchGitHubUsers = createAsyncThunk<User[], string>(
   (userName: string) => {
     try {
       const response = fetchData<User[]>(
-        `https://api.github.com/search/users?q=${userName}`
+        `${process.env.REACT_APP_API_URL}search/users?q=${userName}`
       );
       return response;
     } catch (err) {

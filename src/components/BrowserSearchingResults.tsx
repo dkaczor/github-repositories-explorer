@@ -1,5 +1,5 @@
 import React, { FC, useState, Fragment, useMemo } from "react";
-import { RepositoryPanels } from "components/RepositoryPanel";
+import { RepositoryPanels } from "components/RepositoryPanels";
 import { ExpandedParagraph } from "components/styled";
 import { StateTypes } from "store/Shared/Shared.types";
 import { UserPanel } from "./UserPanel";

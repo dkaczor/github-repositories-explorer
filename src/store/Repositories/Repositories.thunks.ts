@@ -9,7 +9,7 @@ export const fetchGitHubUserRepositories = createAsyncThunk<
 >(`${ReducerName}/fetchGitHubUserRepositories`, (userName: string) => {
   try {
     const response = fetchData<Repository[]>(
-      `https://api.github.com/users/${userName}/repos`
+      `${process.env.REACT_APP_API_URL}users/${userName}/repos`
     );
     return response;
   } catch (err) {
