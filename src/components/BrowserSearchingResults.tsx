@@ -26,17 +26,17 @@ export const BrowserSearchingResults: FC<BrowserSearchingResultsProps> = ({
   const [panelState, updatePanelState] = useState<number>(0);
   const gitHubUserPanels = useMemo(
     () =>
-      searchingResults?.map((item) => (
-        <Fragment key={item.id}>
+      searchingResults?.map((user: User) => (
+        <Fragment key={user.id}>
           <UserPanel
             panelState={panelState}
-            panelLogin={item.login}
-            panelId={item.id}
+            panelLogin={user.login}
+            panelId={user.id}
             repositoriesStatus={repositoriesStatus}
             onUpdatePanelState={updatePanelState}
             onPanelClick={onPanelClick}
           />
-          {panelState === item.id && userRepositories?.length ? (
+          {panelState === user.id && userRepositories?.length ? (
             <RepositoryPanels userRepositories={userRepositories} />
           ) : (
             ""

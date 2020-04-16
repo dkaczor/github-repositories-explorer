@@ -16,7 +16,7 @@ export const RepositoryPanels: FC<RepositoryPanelsProps> = ({
 }) => {
   const RepositoriesPanels = useMemo(
     () =>
-      userRepositories?.map((repository) => (
+      userRepositories?.map((repository: Repository) => (
         <ExpandedPanelSegment key={repository.id} textAlign="left">
           <PanelFirstRow>
             <span>{repository.name}</span>

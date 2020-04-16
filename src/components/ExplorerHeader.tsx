@@ -15,22 +15,20 @@ export const ExplorerHeader: FC<ExplorerHeaderProps> = ({
   userStatusState,
   onTextInput,
   onSearchButtonClick,
-}) => {
-  return (
-    <>
-      <Input
-        fluid
-        onChange={onTextInput}
-        className="inputClass"
-        placeholder="Enter username"
-      />
-      <ExpandedButton
-        fluid
-        onClick={onSearchButtonClick}
-        disabled={!typedSearchingText.length || userStatusState === "loading"}
-      >
-        Search
-      </ExpandedButton>
-    </>
-  );
-};
+}) => (
+  <>
+    <Input
+      fluid
+      onChange={onTextInput}
+      className="inputClass"
+      placeholder="Enter username"
+    />
+    <ExpandedButton
+      fluid
+      onClick={onSearchButtonClick}
+      disabled={!typedSearchingText.length || userStatusState === "loading"}
+    >
+      Search
+    </ExpandedButton>
+  </>
+);
