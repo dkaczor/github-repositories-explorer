@@ -20,21 +20,18 @@ export const UserPanel: FC<BrowserSearchingPanelProps> = ({
   onUpdatePanelState,
   onPanelClick,
 }) => {
+  const handleClick = (): void => {
+    if (panelState !== panelId) {
+      onUpdatePanelState(panelId);
+      onPanelClick(panelLogin);
+    } else {
+      onUpdatePanelState(0);
+    }
+  };
   return (
     <ExpandedSegment
       disabled={repositoriesStatus === "loading"}
-      onClick={
-        repositoriesStatus !== "loading"
-          ? () => {
-              if (panelState !== panelId) {
-                onUpdatePanelState(panelId);
-                onPanelClick(panelLogin);
-              } else {
-                onUpdatePanelState(0);
-              }
-            }
-          : undefined
-      }
+      onClick={repositoriesStatus !== "loading" ? handleClick : undefined}
     >
       <span>{panelLogin}</span>
       <Icon name={panelState !== panelId ? "chevron down" : "chevron up"} />
