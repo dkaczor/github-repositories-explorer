@@ -25,8 +25,7 @@ test("test initial rendering of explorer header component", () => {
 test("test user interactions  of explorer header component", () => {
   const { getByText, getByDisplayValue } = render(PrepareComponent("test"));
   const searchingButton = getByText("Search");
-  let searchingInput = getByDisplayValue("test");
-
+  const searchingInput = getByDisplayValue("test");
   expect(searchingInput).toBeInTheDocument();
   fireEvent.change(searchingInput, { target: { value: "test1" } });
   expect(onTextInput).toBeCalled();

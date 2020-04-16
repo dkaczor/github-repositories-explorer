@@ -40,7 +40,7 @@ test("test rendering user panel component with custom data", () => {
 test("test interaction user panel component with custom data", () => {
   const { queryByText } = render(RenderPanel);
   const panel = queryByText("testUser");
-  expect(panel).toBeTruthy;
+  expect(panel).toBeInTheDocument();
   fireEvent.click(panel?.parentElement!);
   expect(mockData.onPanelClick).toBeCalled();
   expect(mockData.onUpdatePanelState).toBeCalled();
