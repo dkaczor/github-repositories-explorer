@@ -1,14 +1,18 @@
 import React from "react";
-import { renderWithStore } from "utils/configureRender";
+import { renderWithStore } from "utils/testsConfigureRender";
 import GitHubRepositoriesExplorer from "./GitHubRepositoriesExplorer";
-import { initialState } from "utils/initialStates";
+import { initialState } from "utils/testsInitialStates";
 import { fireEvent } from "@testing-library/react";
 
 test("test rendering of initial screen", () => {
-  const { queryByText } = renderWithStore(<GitHubRepositoriesExplorer />, {
-    initialState,
-  }).component;
+  const { queryByText, container } = renderWithStore(
+    <GitHubRepositoriesExplorer />,
+    {
+      initialState,
+    }
+  ).component;
   expect(queryByText("Showing users for", { exact: false })).toEqual(null);
+  expect(container.querySelector("div.loader")).not.toBeInTheDocument();
 });
 
 test("test dispatch to store", () => {

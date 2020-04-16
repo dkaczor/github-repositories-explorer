@@ -65,7 +65,6 @@ const GitHubRepositoriesExplorer: FC = () => {
           <Grid.Column textAlign="center">
             <Segment>
               <ExplorerHeader
-                userStatusState={userStatusState}
                 typedSearchingText={typedSearchingText}
                 onSearchButtonClick={fetchUsers}
                 onTextInput={setSearchingInputText}

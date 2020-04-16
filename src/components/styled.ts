@@ -13,7 +13,7 @@ export const ExpandedButton = styled(Button)`
     border-radius: 0;
     color: #fff;
     margin-top: 20px;
-    font-weight: 300;
+    font-weight: lighter;
     padding: 15px 0px;
   }
 `;
@@ -48,17 +48,7 @@ export const ExpandedPanelSegment = styled(Segment)`
     border: none;
     box-shadow: initial;
     padding-bottom: 50px;
-    animation: fadeInAnimation 1s;
     margin-bottom: 0px;
-
-    @keyframes fadeInAnimation {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
   }
 
   &&&:last-of-type {
@@ -74,8 +64,9 @@ export const ExpandedPanelSegment = styled(Segment)`
 
 export const ExpandedParagraph = styled.p`
   text-align: start;
+  color: #333;
   margin-top: 15px;
-  font-size: 13px;
+  font-size: 14px;
   span::before,
   span::after {
     content: '"';
