@@ -14,7 +14,7 @@ const PrepareComponent = (loadingState: StateTypes, searchingText: string) => (
     onTextInput={onTextInput}
   />
 );
-test("test initial rendering", () => {
+test("test initial rendering of explorer header component", () => {
   const { queryByPlaceholderText, queryByText } = render(
     PrepareComponent("initial", "")
   );
@@ -25,18 +25,18 @@ test("test initial rendering", () => {
   expect(queryByText("Showing users for", { exact: false })).toBeFalsy;
 });
 
-test("test interactions", () => {
-  const { queryByText, getByDisplayValue, rerender } = render(
+test("test user interactions  of explorer header component", () => {
+  const { getByText, getByDisplayValue, rerender } = render(
     PrepareComponent("initial", "test")
   );
-  const searchingButton = queryByText("Search");
+  const searchingButton = getByText("Search");
   let searchingInput = getByDisplayValue("test");
 
   expect(searchingInput).toBeTruthy();
   expect(searchingButton?.classList).not.toContain("disabled");
   fireEvent.change(searchingInput, { target: { value: "test1" } });
   expect(onTextInput).toBeCalled();
-  fireEvent.click(searchingButton!);
+  fireEvent.click(searchingButton);
   expect(onSearchButtonClick).toBeCalled();
   rerender(PrepareComponent("loading", "test1"));
   searchingInput = getByDisplayValue("test1");

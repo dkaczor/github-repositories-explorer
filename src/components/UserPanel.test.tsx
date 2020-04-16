@@ -28,7 +28,7 @@ beforeEach(() => {
   );
 });
 
-test("test rendering with custom data", () => {
+test("test rendering user panel component with custom data", () => {
   const { queryByText } = render(RenderPanel);
   const panelName = queryByText("testUser");
   const panelIcon = panelName?.nextElementSibling;
@@ -37,7 +37,7 @@ test("test rendering with custom data", () => {
   expect(panelIcon?.classList).toContain("down");
 });
 
-test("test interaction with custom data", () => {
+test("test interaction user panel component with custom data", () => {
   const { queryByText } = render(RenderPanel);
   const panel = queryByText("testUser");
   expect(panel).toBeTruthy;

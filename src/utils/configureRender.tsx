@@ -17,4 +17,4 @@ const customRender = (
   return { component: render(ui, { wrapper: Wrapper, ...options }), store };
 };
 
-export { customRender as render };
+export { customRender as renderWithStore };

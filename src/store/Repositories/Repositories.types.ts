@@ -1,6 +1,6 @@
 export interface Repository {
   description: string;
   id: number;
-  forks?: number;
+  stargazers_count?: number;
   name: string;
 }

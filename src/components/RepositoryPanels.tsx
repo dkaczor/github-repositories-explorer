@@ -21,7 +21,7 @@ export const RepositoryPanels: FC<RepositoryPanelsProps> = ({
           <PanelFirstRow>
             <span>{repository.name}</span>
             <span>
-              {repository.forks}
+              {repository.stargazers_count}
               <Icon name="star" />
             </span>
           </PanelFirstRow>
