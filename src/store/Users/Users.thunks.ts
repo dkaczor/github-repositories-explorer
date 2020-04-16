@@ -7,7 +7,7 @@ export const fetchGitHubUsers = createAsyncThunk<User[], string>(
   `${ReducerName}/fetchSelectedUser`,
   (userName: string) => {
     try {
-      const response = fetchData(
+      const response = fetchData<User[]>(
         `https://api.github.com/search/users?q=${userName}`
       );
       return response;
