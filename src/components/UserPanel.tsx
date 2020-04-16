@@ -3,7 +3,7 @@ import { Icon } from "semantic-ui-react";
 import { ExpandedSegment } from "components/styled";
 import { StateTypes } from "store/Shared/Shared.types";
 
-interface BrowserSearchingPanelProps {
+export interface BrowserSearchingPanelProps {
   repositoriesStatus: StateTypes;
   panelId: number;
   panelLogin: string;

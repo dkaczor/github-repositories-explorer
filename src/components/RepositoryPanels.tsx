@@ -7,7 +7,7 @@ import {
 } from "components/styled";
 import { Repository } from "store/Repositories/Repositories.types";
 
-interface RepositoryPanelsProps {
+export interface RepositoryPanelsProps {
   userRepositories: Repository[] | undefined;
 }
 

@@ -1,32 +1,26 @@
 import React from "react";
-import { render } from "utils/test";
+import { render } from "utils/configureRender";
 import GitHubRepositoriesExplorer from "./GitHubRepositoriesExplorer";
-import { RootType } from "store/root";
-
-const initialState: RootType = {
-  gitHubRepositoriesReducer: {
-    status: "initial",
-    githubRepositories: [],
-    error: undefined,
-  },
-  gitHubUsersReducer: {
-    status: "initial",
-    userSearchingText: "",
-    searchedUserName: "",
-    githubUsers: [],
-    error: undefined,
-  },
-};
+import { initialState } from "utils/initialStates";
+import { fireEvent } from "@testing-library/react";
 
 test("test rendering of initial screen", () => {
-  const { queryByPlaceholderText, queryByText } = render(
+  const { queryByText, queryByPlaceholderText, queryByRole } = render(
     <GitHubRepositoriesExplorer />,
     {
       initialState,
     }
   );
-  const searchingButton = queryByText("Search");
-  expect(queryByPlaceholderText("Enter username")).toBeTruthy();
-  expect(searchingButton).toBeTruthy();
-  expect(searchingButton?.classList).toContain("disabled");
+  expect(queryByText("Showing users for", { exact: false })).toEqual(null);
+});
+
+test("test typical scenario", () => {
+  const { queryByText, getByPlaceholderText, getByRole } = render(
+    <GitHubRepositoriesExplorer />,
+    {
+      initialState,
+    }
+  );
+  let searchInput = getByPlaceholderText("Enter username");
+  console.log(fireEvent.change(searchInput, { target: { value: "test1" } }));
 });

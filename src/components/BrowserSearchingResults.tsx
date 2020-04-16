@@ -6,7 +6,7 @@ import { UserPanel } from "./UserPanel";
 import { Repository } from "store/Repositories/Repositories.types";
 import { User } from "store/Users/Users.types";
 
-interface BrowserSearchingResultsProps {
+export interface BrowserSearchingResultsProps {
   searchingResults: User[] | undefined;
   userRepositories: Repository[] | undefined;
   searchedUserName: string;
