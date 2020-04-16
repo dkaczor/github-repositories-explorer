@@ -27,7 +27,7 @@ Testing utility is [React-Testing-Library](https://github.com/testing-library/re
 
 ## Launching application:
 
-1. Get your own GitHubToken. If you do not have one, please follow [this instruction](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line). Please take into consideration that this solution is used only for this task usage.
+1. Get your own GitHubToken. If you do not have one, please follow [this instruction](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line). __Please take into consideration that this solution is used only for this task usage__.
 2. In root folder of application you will find `.env.template`. Fill `REACT_APP_API_TOKEN` with your token. Then save file as: `.env`. Remove `.env.template`.
 3. Run `npm install` to install required node_modules.
 4. After instalation run `npm start` to run application.
