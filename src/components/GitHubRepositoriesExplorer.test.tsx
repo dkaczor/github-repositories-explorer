@@ -5,22 +5,24 @@ import { initialState } from "utils/initialStates";
 import { fireEvent } from "@testing-library/react";
 
 test("test rendering of initial screen", () => {
-  const { queryByText, queryByPlaceholderText, queryByRole } = render(
-    <GitHubRepositoriesExplorer />,
-    {
-      initialState,
-    }
-  );
+  const { queryByText } = render(<GitHubRepositoriesExplorer />, {
+    initialState,
+  }).component;
   expect(queryByText("Showing users for", { exact: false })).toEqual(null);
 });
 
-test("test typical scenario", () => {
-  const { queryByText, getByPlaceholderText, getByRole } = render(
-    <GitHubRepositoriesExplorer />,
-    {
-      initialState,
-    }
-  );
-  let searchInput = getByPlaceholderText("Enter username");
-  console.log(fireEvent.change(searchInput, { target: { value: "test1" } }));
+test("test dispatch to store", () => {
+  const renderedComponent = render(<GitHubRepositoriesExplorer />, {
+    initialState,
+  });
+  const { getByPlaceholderText } = renderedComponent.component;
+  const store = renderedComponent.store;
+  const searchInput = getByPlaceholderText("Enter username");
+  fireEvent.change(searchInput, { target: { value: "test1" } });
+  const actions = store.getActions();
+  const expectedPayload = {
+    type: "gitHubUsersSlice/setSearchingInput",
+    payload: "test1",
+  };
+  expect(actions).toEqual([expectedPayload]);
 });

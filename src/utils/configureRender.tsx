@@ -14,7 +14,7 @@ const customRender = (
   const Wrapper = ({ children }: React.PropsWithChildren<{}>) => (
     <Provider store={store}>{children}</Provider>
   );
-  return render(ui, { wrapper: Wrapper, ...options });
+  return { component: render(ui, { wrapper: Wrapper, ...options }), store };
 };
 
 export { customRender as render };
