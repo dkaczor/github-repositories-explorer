@@ -56,7 +56,7 @@ export const ExpandedPanelSegment = styled(Segment)`
   }
 
   p {
-    margin-left: -5px;
+    margin: 5px 5px 0px -5px;
     font-size: 15px;
     text-align: justify;
   }
